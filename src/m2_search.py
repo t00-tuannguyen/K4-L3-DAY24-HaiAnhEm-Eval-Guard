@@ -106,10 +106,14 @@ class DenseSearch:
     def search(self, query: str, top_k: int = DENSE_TOP_K, collection: str = COLLECTION_NAME) -> list[SearchResult]:
         """Search using dense vectors."""
         query_vector = self._get_encoder().encode(query, normalize_embeddings=True).tolist()
-        response = self.client.query_points(collection, query=query_vector, limit=top_k)
+        # query_points chỉ có từ qdrant-client 1.10; Day 24 pin <1.10 nên fallback sang search()
+        if hasattr(self.client, "query_points"):
+            points = self.client.query_points(collection, query=query_vector, limit=top_k).points
+        else:
+            points = self.client.search(collection, query_vector=query_vector, limit=top_k)
         return [
             SearchResult(text=pt.payload["text"], score=float(pt.score), metadata=pt.payload, method="dense")
-            for pt in response.points
+            for pt in points
         ]
 
 
