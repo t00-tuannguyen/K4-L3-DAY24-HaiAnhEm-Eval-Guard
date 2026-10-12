@@ -34,6 +34,7 @@ def load_test_set(path: str = TEST_SET_PATH) -> list[dict]:
 EVALUATOR_LLM_MODEL = "gpt-4o-mini"
 EVALUATOR_EMBEDDING_MODEL = "text-embedding-3-small"
 NAN_RETRIES = 2
+EVALUATOR_MAX_WORKERS = 4
 
 
 def evaluate_ragas(questions: list[str], answers: list[str],
@@ -48,7 +49,7 @@ def evaluate_ragas(questions: list[str], answers: list[str],
     import math
     from datasets import Dataset
     from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-    from ragas import evaluate
+    from ragas import RunConfig, evaluate
     from ragas.embeddings import LangchainEmbeddingsWrapper
     from ragas.llms import LangchainLLMWrapper
     from ragas.metrics import answer_relevancy, context_precision, context_recall, faithfulness
@@ -85,8 +86,10 @@ def evaluate_ragas(questions: list[str], answers: list[str],
             "contexts": [contexts[i] for i in indices],
             "ground_truth": [ground_truths[i] for i in indices],
         })
+        # Giới hạn song song: 16 workers mặc định làm key bị rate limit → lỗi bị nuốt thành NaN
+        run_config = RunConfig(max_workers=EVALUATOR_MAX_WORKERS, timeout=180, max_retries=10)
         df = evaluate(dataset, metrics=metrics, llm=llm, embeddings=embeddings,
-                      raise_exceptions=False).to_pandas()
+                      raise_exceptions=False, run_config=run_config).to_pandas()
         if len(df) != len(indices):
             raise ValueError(f"RAGAS trả {len(df)} rows cho {len(indices)} câu")
         rows = []
