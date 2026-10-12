@@ -8,7 +8,7 @@ Trưởng nhóm/người nộp: Nguyễn Tiến Tuân — 2A202602595
 
 Ngày lab/deadline áp dụng: 12/10/2026, 23:59 — Asia/Ho_Chi_Minh (UTC+07:00)
 
-Commit dùng để chấm: SHA_PLACEHOLDER
+Commit dùng để chấm: `48f1b14` (commit cuối chứa toàn bộ code, artifacts và báo cáo; commit ngay sau chỉ ghi SHA này vào TEAM).
 
 Mỗi nhóm nộp một repo. Điền đủ thành viên và một mục INDIVIDUAL cho từng người.
 Thêm/xóa rows để khớp nhóm thật; mẫu ba rows không ép nhóm phải có ba người.
