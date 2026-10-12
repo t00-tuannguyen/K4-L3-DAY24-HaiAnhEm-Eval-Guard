@@ -8,7 +8,8 @@ Trưởng nhóm/người nộp: Nguyễn Tiến Tuân — 2A202602595
 
 Ngày lab/deadline áp dụng: 12/10/2026, 23:59 — Asia/Ho_Chi_Minh (UTC+07:00)
 
-Commit dùng để chấm: {{Commit SHA}}
+Commit dùng để chấm: Chưa chốt. HEAD hiện tại là `6ad45e9`; các cập nhật báo cáo
+và sửa hash provenance trong worktree chưa commit/push.
 
 Mỗi nhóm nộp một repo. Điền đủ thành viên và một mục INDIVIDUAL cho từng người.
 Thêm/xóa rows để khớp nhóm thật; mẫu ba rows không ép nhóm phải có ba người.
@@ -18,7 +19,7 @@ Thêm/xóa rows để khớp nhóm thật; mẫu ba rows không ép nhóm phải
 | STT | Họ và tên | MSSV | Vai trò / công việc thật | Bằng chứng |
 |---|---|---|---|---|
 | 1 | Nguyễn Tiến Tuân | 2A202602595 | Trưởng nhóm; CP0 tích hợp m1–m5 (`src/m*_*.py`, adapter m4), sinh answers; Phase A Tasks 1–4 (`src/phase_a_ragas.py`); Phase B Tasks 5–8 (`src/phase_b_judge.py`); báo cáo failure_clusters/bias_report; đóng gói và nộp | Nhánh `p1-eval`; `artifacts/answers_50q.json`, `ragas_50q.json`, `judge_results.json`; `doc/reports/failure_clusters.md`, `bias_report.md` |
-| 2 | Nguyễn Minh Kiệt | 2A202602373 | Phase C Tasks 9a–12 (`src/phase_c_guard.py`, `guardrails/config.yml`); Task 13 blueprint | {{Commit/PR/report}} |
+| 2 | Nguyễn Minh Kiệt | 2A202602373 | Phase C Tasks 9a–12 (`src/phase_c_guard.py`, `guardrails/config.yml`); Task 13 blueprint | Commit local `3a3bc9d`; `doc/reports/blueprint.md`; offline tests |
 
 Người tích hợp/chạy batch/nộp link: Nguyễn Tiến Tuân — tích hợp m1–m5, chạy setup và runner Phase A/B, merge PR, chạy `check_lab.py` và nộp link.
 
@@ -63,12 +64,29 @@ hoặc pip resolve để khẳng định runtime đã chạy.
 
 ### NguyenMinhKiet-2A202602373
 
-- Phần được giao và phần thực tế đã làm: {{Nhiệm vụ, file/hàm, mục đích}}.
-- Bằng chứng: {{Commit/PR và artifacts/reports liên quan}}.
-- Cách kiểm tra: {{Unit mock hoặc live experiment, lệnh và kết quả}}.
-- Điều đã học: {{Khái niệm và cách thể hiện trong bài}}.
-- Giới hạn/cách xử lý: {{Vấn đề và kiểm chứng}}.
-- Nguồn/AI hỗ trợ nếu có: {{Công cụ, phạm vi, cách tự kiểm chứng}}.
+- Phần được giao và phần thực tế đã làm: Phase C Tasks 9a–12 trong
+  `src/phase_c_guard.py`; PII scan/redaction, NeMo input/output checks, attack
+  suite và phép đo tuần tự hai input layers. Hoàn thiện Task 13 trong
+  `doc/reports/blueprint.md`; báo cáo nêu riêng kết quả đã có và phần Phase C
+  chưa chạy.
+- Bằng chứng: commit local `3a3bc9d` cho Phase C; blueprint hiện tại; kiểm thử
+  provenance newline trong `tests/test_report_contracts.py`.
+- Cách kiểm tra: `python -m pytest tests/ -m 'not integration' -q` → 87 passed,
+  3 deselected. `python scripts/check_lab.py` xác nhận answers, Phase A và
+  Phase B hợp lệ; Phase C chưa đạt vì chưa có `artifacts/guard_results.json`.
+- Điều đã học: PII detection và input/output rails là các lớp khác nhau; chỉ
+  đo input guard không đại diện latency end-to-end. Đổi thứ tự A/B có thể ảnh
+  hưởng pairwise judge, nên cần đánh giá riêng với đủ mẫu.
+- Giới hạn/cách xử lý: `OPENAI_API_KEY` đã có trong `.env` local (không in/commit),
+  nhưng Phase C chưa chạy: lần cài runtime đầu hết dung lượng ổ đĩa tạm; lần
+  cài tối thiểu yêu cầu Microsoft Visual C++ 14.0+ để build Annoy, chưa cài.
+  Chưa có `guard_results.json` nên không tự tạo số liệu hay kết quả giả. Trên
+  Windows, checkout CRLF làm sai hash nguồn so với artifact tạo trên Unix;
+  chuẩn hóa CRLF thành LF trong provenance hashing và thêm regression test.
+- Nguồn/AI hỗ trợ nếu có: Copilot SDK assistant trong VS Code hỗ trợ tích hợp
+  remote, sửa hash provenance theo line ending, viết regression test và tổng
+  hợp blueprint. Tự kiểm chứng bằng offline pytest và `check_lab.py`; không
+  gọi live API trong phiên này.
 
 ## Cập nhật sau khi nộp
 

@@ -84,6 +84,19 @@ def test_valid_answers_and_reports(answers, phase_a_data, phase_b_data):
     validate_metadata(phase_a_data[0], [phase_a_data[-1], TEST_SET_PATH])
 
 
+def test_metadata_source_hash_ignores_windows_line_endings(tmp_path):
+    lf_path = tmp_path / "lf" / "source.json"
+    crlf_path = tmp_path / "crlf" / "source.json"
+    lf_path.parent.mkdir()
+    crlf_path.parent.mkdir()
+    lf_path.write_bytes(b'{"value": 1}\n')
+    crlf_path.write_bytes(b'{"value": 1}\r\n')
+    models = {"generation": [], "evaluator": [], "judge": [], "guard": []}
+
+    report = {"metadata": metadata([lf_path], models=models)}
+    validate_metadata(report, [crlf_path])
+
+
 @pytest.mark.parametrize("field,value", [
     ("generation_mode", None), ("generation_mode", "pretend"), ("generation_mode", True),
     ("generation_model", None), ("generation_model", 123), ("generation_model", "   ")])

@@ -25,6 +25,11 @@ def write_json(path, payload):
 MODEL_ROLES = ("generation", "evaluator", "judge", "guard")
 
 
+def source_sha256(path):
+    content = Path(path).read_bytes().replace(b"\r\n", b"\n")
+    return hashlib.sha256(content).hexdigest()
+
+
 def model_ids(values, name):
     if not isinstance(values, list) or any(
             not isinstance(value, str) or not value.strip() or value != value.strip()
@@ -57,8 +62,7 @@ def metadata(source_paths, *, models, run_kind="live"):
         "format_version": 2, "run_kind": run_kind,
         "models": {role: model_ids(models[role], role) for role in MODEL_ROLES},
         "created_at": datetime.now(timezone.utc).isoformat(),
-        "source_sha256": {Path(p).name: hashlib.sha256(Path(p).read_bytes()).hexdigest()
-                          for p in source_paths},
+        "source_sha256": {Path(p).name: source_sha256(p) for p in source_paths},
     }
 
 
