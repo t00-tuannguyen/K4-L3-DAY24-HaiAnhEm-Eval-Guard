@@ -6,7 +6,7 @@ Repo chung: https://github.com/t00-tuannguyen/K4-L3-DAY24-HaiAnhEm-Eval-Guard
 
 Trưởng nhóm/người nộp: Nguyễn Tiến Tuân — 2A202602595
 
-Ngày lab/deadline áp dụng: {{Ngày giờ theo thông báo lớp}} — Asia/Ho_Chi_Minh (UTC+07:00)
+Ngày lab/deadline áp dụng: 12/10/2026, 23:59 — Asia/Ho_Chi_Minh (UTC+07:00)
 
 Commit dùng để chấm: {{Commit SHA}}
 
@@ -18,7 +18,7 @@ Thêm/xóa rows để khớp nhóm thật; mẫu ba rows không ép nhóm phải
 | STT | Họ và tên | MSSV | Vai trò / công việc thật | Bằng chứng |
 |---|---|---|---|---|
 | 1 | Nguyễn Tiến Tuân | 2A202602595 | Trưởng nhóm; CP0 tích hợp m1–m5 (`src/m*_*.py`, adapter m4), sinh answers; Phase A Tasks 1–4 (`src/phase_a_ragas.py`); Phase B Tasks 5–8 (`src/phase_b_judge.py`); báo cáo failure_clusters/bias_report; đóng gói và nộp | Nhánh `p1-eval`; `artifacts/answers_50q.json`, `ragas_50q.json`, `judge_results.json`; `doc/reports/failure_clusters.md`, `bias_report.md` |
-| 2 | {{Họ tên}} | {{MSSV}} | Phase C Tasks 9a–12 (`src/phase_c_guard.py`, `guardrails/config.yml`); Task 13 blueprint | {{Commit/PR/report}} |
+| 2 | Nguyễn Minh Kiệt | 2A202602373 | Phase C Tasks 9a–12 (`src/phase_c_guard.py`, `guardrails/config.yml`); Task 13 blueprint | {{Commit/PR/report}} |
 
 Người tích hợp/chạy batch/nộp link: Nguyễn Tiến Tuân — tích hợp m1–m5, chạy setup và runner Phase A/B, merge PR, chạy `check_lab.py` và nộp link.
 
@@ -31,8 +31,6 @@ Nếu cài full NeMo chưa thành công, ghi lỗi thực tế; không dùng uni
 hoặc pip resolve để khẳng định runtime đã chạy.
 
 ## INDIVIDUAL
-
-Sao chép mẫu cho mỗi thành viên; tiêu đề họ tên không dấu-MSSV.
 
 ### NguyenTienTuan-2A202602595
 
@@ -59,11 +57,11 @@ Sao chép mẫu cho mỗi thành viên; tiêu đề họ tên không dấu-MSSV.
   giảm xuống 4 workers thì đủ 50 câu; key OpenAI cũ hết hiệu lực (401) → thay key trong `.env` (không commit);
   `pyarrow 26` xung đột NumPy 1.26 → cài `pyarrow<20`. Mẫu nhỏ (50 câu, 5 cặp, 10 nhãn) nên các tỷ lệ còn nhiễu.
 - Nguồn/AI hỗ trợ nếu có: mã m1–m5 từ repo Day 18 của chính mình (K4-Track3A-Day18-NguyenTienTuan-2A202602595-Production-RAG).
-  Dùng Claude Code (Claude Opus) hỗ trợ đọc đề, viết code Tasks 1–8, sửa m2/m4 và soạn hai báo cáo. Tự kiểm chứng bằng
+  Dùng Claude Code (Claude Opus) hỗ trợ đọc đề, viết code Tasks 1–8, sửa m2/m4 và soạn bản nháp hai báo cáo. Tự kiểm chứng bằng
   unit tests, chạy live runner, `check_lab.py`, và đối chiếu từng khẳng định trong báo cáo với answer/contexts trong JSON
   (đã sửa 2 khẳng định sai trong bản nháp: số file corpus và nguyên nhân ID 50). Số đo và nhãn đều lấy từ lần chạy thật.
 
-### {{HoVaTen}}-{{MSSV}}
+### NguyenMinhKiet-2A202602373
 
 - Phần được giao và phần thực tế đã làm: {{Nhiệm vụ, file/hàm, mục đích}}.
 - Bằng chứng: {{Commit/PR và artifacts/reports liên quan}}.
@@ -74,5 +72,4 @@ Sao chép mẫu cho mỗi thành viên; tiêu đề họ tên không dấu-MSSV.
 
 ## Cập nhật sau khi nộp
 
-{{Ghi phiên bản nộp; nếu sửa sau deadline, ghi commit/thời điểm/lý do và thông báo
-coach cho phép áp dụng bản cập nhật. Nếu không có cập nhật, ghi rõ không có.}}
+Không có cập nhật sau khi nộp.
