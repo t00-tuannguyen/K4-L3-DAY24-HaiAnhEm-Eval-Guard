@@ -16,10 +16,12 @@ from config import ADVERSARIAL_SET_PATH, GUARDRAILS_CONFIG_DIR, LATENCY_BUDGET_P
 # Entity types that represent actionable personal or secret data for this guard.
 # Presidio also returns contextual entities such as DATE_TIME, LOCATION, PERSON,
 # and NRP; treating those as PII would block ordinary policy questions.
+# US/UK-format recognizers (US_DRIVER_LICENSE, US_SSN, US_PASSPORT, UK_NHS, ...) are
+# excluded: on Vietnamese text they only produce weak matches such as "v2024" ->
+# US_DRIVER_LICENSE (score 0.3), while real VN identifiers are caught by VN_CCCD/VN_PHONE.
 PII_ENTITY_TYPES = frozenset({
     "VN_CCCD", "VN_PHONE", "EMAIL_ADDRESS", "PHONE_NUMBER", "CREDIT_CARD",
-    "IBAN_CODE", "US_SSN", "US_BANK_NUMBER", "US_DRIVER_LICENSE",
-    "US_PASSPORT", "UK_NHS", "MEDICAL_LICENSE", "CRYPTO", "IP_ADDRESS",
+    "IBAN_CODE", "CRYPTO", "IP_ADDRESS",
 })
 
 
